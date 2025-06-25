@@ -49,15 +49,12 @@ start_instance() {
 	if [ -f "$PLANET" ]; then
 		if [ ! -s "$PLANET" ]; then
 			logger -t "zerotier" "自定义planet文件为空,删除..."
-			rm -f $config_path/planet
 			rm -f $PLANET
 			nvram set zerotier_planet=""
 			nvram commit
 		else
 			logger -t "zerotier" "自定义planet文件不为空,创建..."
 			planet="$(base64 $PLANET)"
-			cp -f $PLANET $config_path/planet
-			rm -f $PLANET
 			nvram set zerotier_planet="$planet"
 			nvram commit
 		fi
